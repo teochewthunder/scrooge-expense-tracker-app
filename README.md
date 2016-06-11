@@ -1,1 +1,1 @@
-# scrooge-expense-tracker-app
+Scrooge Expense Tracker Mobile App
