@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+		<script src="js/jquery-2.1.4.min.js"></script>
+		<script src="js/jquery.mobile-1.4.5.min.js"></script>
+	</head>
+
+	<body>
+		<div data-role="page" id="selectdate" data-theme="b">
+		    <div data-role="header" data-position="fixed">
+		    	THE SCORRENGE DIRECTIVE<br />A project by T___T
+		    </div>
+		    <div data-role="main" class="ui-content">
+		    	<div data-role="fieldcontainer">
+			    	<label for="ddlMonth">Select a Month</label>		        
+			    	<select name="ddlMonth" id="ddlMonth">
+			    		<option value="0">January</option>
+			    		<option value="1">February</option>
+			    		<option value="2">March</option>
+			    		<option value="3">April</option>
+			    		<option value="4">May</option>
+			    		<option value="5">June</option>
+			    		<option value="6">July</option>
+			    		<option value="7">August</option>
+			    		<option value="8">September</option>
+			    		<option value="9">October</option>
+			    		<option value="10">November</option>
+			    		<option value="11">December</option>
+			    	</select>
+			    </div>
+			    <div data-role="fieldcontainer">
+			    	<label for="ddlYear">Select a Year</label>		        
+			    	<select name="ddlYear" id="ddlYear">
+
+			    	</select>
+			    </div>
+		    	<a href="#" data-role="button" data-icon="forward" onclick="set_currentdate();">Go!</a>
+		    	<a href="#" data-role="button" data-icon="delete" onclick="delete_currentdate();">Delete</a>
+		    </div>
+		    <div data-role="footer" data-position="fixed">
+		    	<a href="#selectdate" data-icon="info">Select Month</a>
+		    	<a href="#entries" data-icon="grid">Entries</a>
+		    	<a href="#settings" data-icon="gear">Settings</a>
+			</div>
+		</div>
+
+		<div data-role="page" id="entries" data-theme="b">
+		    <div data-role="header" data-position="fixed">
+		    	ENTRIES
+		    </div>
+		    <div data-role="main" class="ui-content">		        
+		    	<table data-role="table" class="ui-responsive" id="tblDailyEntries" style="font-size:0.7em;">
+		    		<thead>
+		    			<tr>
+		    				<td>Day</td>
+		    				<td id="colA"></td>
+		    				<td id="colB"></td>
+		    				<td id="colC"></td>
+		    				<td id="colD"></td>
+		    				<td>Total</td>
+		    			</tr>
+		    		</thead>
+		    		<tbody>
+
+		    		</tbody>
+		    	</table>
+		    </div>
+		    <div data-role="footer" data-position="fixed">
+		    	<a href="#selectdate" data-icon="info">Select Month</a>
+		    	<a href="#entries" data-icon="grid">Entries</a>
+		    	<a href="#settings" data-icon="gear">Settings</a>
+			</div>
+		</div>
+
+		<div data-role="page" id="settings" data-theme="b">
+		    <div data-role="header" data-position="fixed">
+			SETTINGS
+		    </div>
+
+		    <div data-role="main" class="ui-content">
+		    	<div data-role="fieldcontainer">
+			    <label for="txtA">Category A: </label>
+			    <input id="txtA_name" name="txtA" placeholder="Enter title...">
+			</div>
+			<div data-role="fieldcontainer">
+			    <label for="txtB">Category B: </label>
+			    <input id="txtB_name" name="txtB" placeholder="Enter title...">
+			</div>
+			<div data-role="fieldcontainer">
+			    <label for="txtC">Category C: </label>
+			    <input id="txtC_name" name="txtC" placeholder="Enter title...">
+			</div>
+			<div data-role="fieldcontainer">
+			    <label for="txtD">Category D: </label>
+			    <input id="txtD_name" name="txtD" placeholder="Enter title...">
+		    	</div>
+			<div data-role="fieldcontainer">
+			    <label for="txtBudget">Monthly Budget: </label>
+			    <input id="txtBudget" name="txtD" placeholder="Enter amount..." onchange="fixinput(this,2);">
+		    	</div>
+			<div data-role="fieldcontainer">
+			    <label for="txtInterval">Interval (days): </label>
+			    <input id="txtInterval" name="txtD" placeholder="Enter days..." onchange="fixinput(this,0);">
+		    	</div>
+			<a href="#settings" data-role="button" data-icon="edit" onclick="update_settings();">Edit</a>
+		    </div>
+
+		    <div data-role="footer" data-position="fixed">
+		    	<a href="#selectdate" data-icon="info">Select Month</a>
+		    	<a href="#entries" data-icon="grid">Entries</a>
+		    	<a href="#settings" data-icon="gear">Settings</a>
+		    </div>
+		</div>
+
+		<div data-role="page" id="dailyentry" data-theme="b">
+		    <div data-role="header" data-position="fixed">
+		    	DAILY ENTRY for <span id="pnlDay"></span>
+		    </div>
+
+		    <div data-role="main" class="ui-content">		        
+			    <div data-role="fieldcontainer">
+		    		<label for="txtA" id="lblA">Category A: </label>
+		    		<input id="txtA_amount" name="txtA" placeholder="Enter amount..." onchange="fixinput(this,2);">
+			    </div>
+			    <div data-role="fieldcontainer">
+		    		<label for="txtB" id="lblB">Category B: </label>
+		    		<input id="txtB_amount" name="txtB" placeholder="Enter amount..." onchange="fixinput(this,2);">
+			    </div>
+			    <div data-role="fieldcontainer">
+		    		<label for="txtC" id="lblC">Category C: </label>
+		    		<input id="txtC_amount" name="txtC" placeholder="Enter amount..." onchange="fixinput(this,2);">
+			    </div>
+			    <div data-role="fieldcontainer">
+		    		<label for="txtD" id="lblD">Category D: </label>
+		    		<input id="txtD_amount" name="txtD" placeholder="Enter amount..." onchange="fixinput(this,2);">
+			    </div>
+			    <div data-role="fieldcontainer">
+		    		<label for="txtD" id="lblD">Comments: </label>
+		    		<textarea id="txtComments" name="txtComments" placeholder="Enter comment..."></textarea>
+			    </div>
+		    	<a href="#dailyentry" data-role="button" data-icon="edit" onclick="update_dailyentry();">Edit</a>
+		    </div>
+
+		    <div data-role="footer" data-position="fixed">
+		    	<a href="#selectdate" data-icon="info">Select Month</a>
+		    	<a href="#entries" data-icon="grid">Entries</a>
+		    	<a href="#settings" data-icon="gear">Settings</a>
+			</div>
+		</div>
+
+		<script>
+				var currentdate = new Date();
+			    var glb_settings,glb_archive;
+			    var glb_currentyear,glb_currentmonth,glb_currentday;
+
+			    glb_currentyear = currentdate.getFullYear();
+			    glb_currentmonth = currentdate.getMonth();
+
+			    $(document).ready(function()
+			    {
+			        if (localStorage.getItem("scrooge_settings") == null) 
+			        {
+			            localStorage.setItem("scrooge_settings","[{\"category\":\"A\",\"name\":\"A\"},{\"category\":\"B\",\"name\":\"B\"},{\"category\":\"C\",\"name\":\"C\"},{\"category\":\"D\",\"name\":\"D\"},{\"budget\":\"1000.00\"},{\"interval\":\"5\"}]");
+			        }
+
+		            glb_settings = JSON.parse(localStorage.getItem("scrooge_settings"));
+			    });
+
+				$(document).on("pagebeforeshow", "#selectdate", function(event, data) 
+				{
+					$("#ddlMonth").val(glb_currentmonth).attr("selected", "selected");
+					$("#ddlMonth").selectmenu( "refresh" );
+
+					$("#ddlYear").empty();
+
+					for (var i=-2;i<=1;i++)
+					{
+						yearoption=$("<option value=\""+(currentdate.getFullYear()+i)+"\">"+(currentdate.getFullYear()+i)+"</option>");
+						$("#ddlYear").append(yearoption);
+					}	
+
+					$("#ddlYear").val(glb_currentyear).attr("selected", "selected");
+					$("#ddlYear").selectmenu( "refresh" );
+				});
+
+				$(document).on("pagebeforeshow", "#entries", function(event, data) 
+				{
+					$("#colA").html(glb_settings[0].name);
+					$("#colB").html(glb_settings[1].name);
+					$("#colC").html(glb_settings[2].name);
+					$("#colD").html(glb_settings[3].name);
+
+					var archivename="archive_" + glb_currentyear + "_" + glb_currentmonth;
+					var temprow,temptotal;
+					var tempsubtotal=[0,0,0,0,0];
+					var budget=parseFloat(glb_settings[4].budget);
+					var interval=parseInt(glb_settings[5].interval);
+
+					if (localStorage.getItem(archivename) == null) 
+					{
+						add_monthyear();
+					}
+
+					glb_archive=JSON.parse(localStorage.getItem(archivename));
+					$("#tblDailyEntries tbody").empty();
+
+					for (var i=0;i<glb_archive.length;i++)
+					{
+						temptotal=parseFloat(glb_archive[i].A)+parseFloat(glb_archive[i].B)+parseFloat(glb_archive[i].C)+parseFloat(glb_archive[i].D);
+						temprow=$("<tr><td><a href=\"#\" onclick=\"goto_dailyentry("+(i+1)+");\">"+(i+1)+"</a></td><td>"+glb_archive[i].A+"</td><td>"+glb_archive[i].B+"</td><td>"+glb_archive[i].C+"</td><td>"+glb_archive[i].D+"</td><td>"+temptotal.toFixed(2)+"</td></tr>");
+						$("#tblDailyEntries tbody").append(temprow);
+
+						tempsubtotal[0]+=parseFloat(glb_archive[i].A);
+						tempsubtotal[1]+=parseFloat(glb_archive[i].B);
+						tempsubtotal[2]+=parseFloat(glb_archive[i].C);
+						tempsubtotal[3]+=parseFloat(glb_archive[i].D);
+						tempsubtotal[4]+=temptotal;
+						budget-=temptotal;
+
+						if ((i+1)%interval==0)
+						{
+							temprow=$("<tr><td>SUBT.</td><td>"+tempsubtotal[0].toFixed(2)+"</td><td>"+tempsubtotal[1].toFixed(2)+"</td><td>"+tempsubtotal[2].toFixed(2)+"</td><td>"+tempsubtotal[3].toFixed(2)+"</td><td>"+tempsubtotal[4].toFixed(2)+"</td></tr>");
+							$("#tblDailyEntries tbody").append(temprow);
+
+							temprow=$("<tr><td>REM.</td><td></td><td></td><td></td><td></td><td>"+budget.toFixed(2)+"</td></tr>");
+							$("#tblDailyEntries tbody").append(temprow);
+						}
+					}
+
+					temprow=$("<tr><td>TOT.</td><td>"+tempsubtotal[0].toFixed(2)+"</td><td>"+tempsubtotal[1].toFixed(2)+"</td><td>"+tempsubtotal[2].toFixed(2)+"</td><td>"+tempsubtotal[3].toFixed(2)+"</td><td>"+tempsubtotal[4].toFixed(2)+"</td></tr>");
+					$("#tblDailyEntries tbody").append(temprow);
+
+					temprow=$("<tr><td>REM.</td><td></td><td></td><td></td><td></td><td>"+budget.toFixed(2)+"</td></tr>");
+					$("#tblDailyEntries tbody").append(temprow);
+
+					$("#tblDailyEntries").table( "refresh" );
+				});
+
+	    		$(document).on("pagebeforeshow", "#settings", function(event, data) 
+	    		{
+					$("#txtA_name").val(glb_settings[0].name);
+					$("#txtB_name").val(glb_settings[1].name);
+					$("#txtC_name").val(glb_settings[2].name);
+					$("#txtD_name").val(glb_settings[3].name);
+					$("#txtBudget").val(glb_settings[4].budget);
+					$("#txtInterval").val(glb_settings[5].interval);
+	    		});
+
+				$(document).on("pagebeforeshow", "#dailyentry", function(event, data) 
+				{
+					var showdate=new Date(glb_currentyear,glb_currentmonth,glb_currentday,0,0,0,0);
+					$("#pnlDay").html(showdate.toDateString());
+
+					$("#lblA").html(glb_settings[0].name);
+					$("#lblB").html(glb_settings[1].name);
+					$("#lblC").html(glb_settings[2].name);
+					$("#lblD").html(glb_settings[3].name);
+
+					dayindex=glb_currentday-1;
+
+					$("#txtA_amount").val(glb_archive[dayindex].A);
+					$("#txtB_amount").val(glb_archive[dayindex].B);
+					$("#txtC_amount").val(glb_archive[dayindex].C);
+					$("#txtD_amount").val(glb_archive[dayindex].D);
+					$("#txtComments").val(glb_archive[dayindex].comments);
+				});
+
+				function fixinput(varobj,vardec)
+				{
+					if (isNaN(varobj.value)||varobj.value.trim()=="")
+					{
+						varobj.value=(0).toFixed(vardec);
+					}
+					else
+					{
+						varobj.value=parseFloat(varobj.value).toFixed(vardec);
+					}
+				}
+
+				function set_currentdate()
+				{
+					glb_currentmonth = parseInt($("#ddlMonth").val());
+					glb_currentyear = parseInt($("#ddlYear").val());
+
+					$.mobile.changePage("#entries", {transition: "slide"});
+				}
+
+				function delete_currentdate()
+				{
+					glb_currentmonth = parseInt($("#ddlMonth").val());
+					glb_currentyear = parseInt($("#ddlYear").val());
+
+					var archivename="archive_" + glb_currentyear + "_" + glb_currentmonth;
+
+					localStorage.removeItem(archivename);
+					alert("Requested archive deleted.");
+				}
+
+				function add_monthyear()
+				{
+					glb_archive = [];
+					var archiveobject;
+					var day=0;
+					var monthpointer=glb_currentmonth;
+
+					var datepointer = new Date(glb_currentyear,monthpointer,1);
+
+					while (monthpointer==glb_currentmonth)
+					{	
+						glb_archive[day]={"day":day+1,"A":0,"B":0,"C":0,"D":0,"comments":""};
+
+						datepointer.setDate(datepointer.getDate() + 1);
+						day++;
+						monthpointer=datepointer.getMonth();
+					}
+
+					localStorage.setItem("archive_" + glb_currentyear + "_" + glb_currentmonth, JSON.stringify(glb_archive));
+					$.mobile.changePage("#entries", {transition: "slide"});
+				}
+
+			    function update_dailyentry()
+			    {
+			    	dayindex=glb_currentday-1;
+
+			    	glb_archive[dayindex].A=parseFloat($("#txtA_amount").val()).toFixed(2);
+			    	glb_archive[dayindex].B=parseFloat($("#txtB_amount").val()).toFixed(2);
+			    	glb_archive[dayindex].C=parseFloat($("#txtC_amount").val()).toFixed(2);
+			    	glb_archive[dayindex].D=parseFloat($("#txtD_amount").val()).toFixed(2);
+			    	glb_archive[dayindex].comments=$("#txtComments").val();
+
+			    	localStorage.setItem("archive_" + glb_currentyear + "_" + glb_currentmonth, JSON.stringify(glb_archive));
+
+			    	alert ("Daily entry saved.");
+			    }
+	    
+	    		function update_settings()
+	    		{
+	    			glb_settings[0].name=$("#txtA_name").val();
+	    			glb_settings[1].name=$("#txtB_name").val();
+	    			glb_settings[2].name=$("#txtC_name").val();
+	    			glb_settings[3].name=$("#txtD_name").val();
+	    			glb_settings[4].budget=$("#txtBudget").val();
+	    			glb_settings[5].interval=$("#txtInterval").val();
+
+	    			localStorage.setItem("scrooge_settings", JSON.stringify(glb_settings));
+
+	    			alert ("Settings saved.");
+	    		}
+
+			    function goto_dailyentry(varday)
+			    {
+			    	glb_currentday=varday;
+			    	$.mobile.changePage("#dailyentry", {transition: "slide"});
+			    }
+		</script>
+	</body>
+</html>
